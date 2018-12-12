@@ -21,9 +21,12 @@ steps:
 
 - task: PublishBuildArtifacts@1
 
-- task: DotNetCoreCLI@2
+- script: dotnet pack /p:PackageVersion=$(version)  # define version variable elsewhere in your pipeline
+
+- task: NuGetCommand@2
   inputs:
-    command: publish
-    publishWebProjects: True
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: True
+    command: push
+    nuGetFeedType: external
+    publishFeedCredentials: '$(build.artifactstagingdirectory)\**\*.zip'
+    versioningScheme: byEnvVar
+    versionEnvVar: version
