@@ -20,13 +20,14 @@ steps:
     testResultsFiles: '**/*.trx'
 
 - task: PublishBuildArtifacts@1
-
-- script: dotnet pack /p:PackageVersion=$(version)  # define version variable elsewhere in your pipeline
-
-- task: NuGetCommand@2
+    
+- task: DotNetCoreCLI@2
   inputs:
-    command: push
-    nuGetFeedType: external
-    publishFeedCredentials: '$(build.artifactstagingdirectory)\**\*.zip'
-    versioningScheme: byEnvVar
-    versionEnvVar: version
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
+
+- task: AzureRmWebAppDeployment@3
+  inputs:
+    Package: $(System.ArtifactsDirectory)/**/*.zip
