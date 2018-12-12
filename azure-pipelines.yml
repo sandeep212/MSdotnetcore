@@ -28,8 +28,5 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: True
 
-- task: AzureRmWebAppDeployment@3
-  inputs:
-    azureSubscription: 'Free Trial (45dd096c-cedd-431c-8db8-be3ed6a8a64a)'
-    WebAppName: 'demo2-azure'
-    Package: $(System.ArtifactsDirectory)/**/*.zip
+- task: PublishBuildArtifacts@1
+  displayName: 'publish artifacts'
