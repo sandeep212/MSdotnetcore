@@ -1,6 +1,6 @@
 # Build ASP.NET Core project using Azure Pipelines
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core?view=vsts
-# new line added
+# new line
 pool:
   vmImage: 'Ubuntu 16.04'
   
